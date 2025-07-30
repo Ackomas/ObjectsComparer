@@ -1,0 +1,68 @@
+name: 1.$(Date:yyMMdd).$(Rev:r)
+
+trigger:
+- ackomas
+
+variables:
+  - name: projectName
+    value: ObjectsComparer
+  - name: projectPath
+    value: ObjectsComparer/ObjectsComparer
+  - group: GhRepos-FeedConfig
+
+pool:
+  name: ci
+  demans: DOTNET_VERSION -equals 9
+
+
+stages: 
+  - stage: Package
+    displayName: Package ObjectsComparer
+    jobs:
+      - job: Package_objet_comparer
+        displayName: Package ObjectsComparer
+
+        workspace:
+          clean: all
+
+        steps:
+          - script: |
+              echo "Show parameters !!"
+              echo $(projectPath)
+              echo $(projectName)
+              echo $(VstsFeed)
+              echo $(ObjectComparerPackageId)
+
+          - task: DotNetCoreCLI@2
+            displayName: Restore packages
+            inputs:
+              command: restore
+              projects: $(System.DefaultWorkingDirectory)/${{ variables.projectPath }}/${{ variables.projectName }}.csproj
+              feedsToUse: select
+              vstsFeed: '$(VstsFeed)'
+              noCache: true
+
+          - task: DotNetCoreCLI@2
+            displayName: Build project
+            inputs:
+              command: 'build'
+              projects: $(System.DefaultWorkingDirectory)/${{variables.projectPath}}/${{variables.projectName}}.csproj
+              arguments: '--no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: Pack project
+            inputs:
+              command: 'pack'
+              packagesToPack: $(System.DefaultWorkingDirectory)/${{variables.projectPath}}/${{variables.projectName}}.csproj
+              packDirectory: $(System.DefaultWorkingDirectory)/publishPackage
+              versioningScheme: byBuildNumber
+              buildProperties: PackageID=$(ObjectComparerPackageId) 
+
+          - task: DotNetCoreCLI@2
+            displayName: Push package
+            inputs:
+              command: push
+              searchPatternPush: $(System.DefaultWorkingDirectory)/publishPackage/*.nupkg
+              nuGetFeedType: internal
+              publishVstsFeed: $(VstsFeed)
+
