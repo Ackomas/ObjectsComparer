@@ -19,7 +19,7 @@ stages:
   - stage: Package
     displayName: Package ObjectsComparer
     jobs:
-      - job: Package objet comparer
+      - job: Package_objet_comparer
         displayName: Package ObjectsComparer
 
         workspace:
