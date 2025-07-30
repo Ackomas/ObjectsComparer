@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ObjectsComparer
 {
@@ -24,6 +25,11 @@ namespace ObjectsComparer
         /// <param name="obj2">Object 2.</param>
         /// <returns>List of differences between objects.</returns>
         public IEnumerable<Difference> CalculateDifferences<T>(T obj1, T obj2)
+        {
+            return CalculateDifferences(typeof(T), obj1, obj2);
+        }
+
+        public IEnumerable<Difference> CalculateDifferences<T>(T obj1, T obj2, MemberInfo memberInfo)
         {
             return CalculateDifferences(typeof(T), obj1, obj2);
         }

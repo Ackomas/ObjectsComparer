@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ObjectsComparer
 {
@@ -63,5 +64,13 @@ namespace ObjectsComparer
         /// <param name="obj2">Object 2.</param>
         /// <returns>List of differences between objects.</returns>
         IEnumerable<Difference> CalculateDifferences<T>(T obj1, T obj2);
+
+        /// <summary>
+        /// Calculates list of differences between objects.
+        /// </summary>
+        /// <param name="obj1">Object 1.</param>
+        /// <param name="obj2">Object 2.</param>
+        /// <returns>List of differences between objects.</returns>
+        public abstract IEnumerable<Difference> CalculateDifferences<T>(T obj1, T obj2, MemberInfo memberInfo);
     }
 }
