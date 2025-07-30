@@ -7,7 +7,7 @@ variables:
   - name: projectName
     value: ObjectsComparer
   - name: projectPath
-    value: ObjectsComparer/ObjectsComparer/ObjectsComparer
+    value: ObjectsComparer/ObjectsComparer
   - group: GhRepos-FeedConfig
 
 pool:
