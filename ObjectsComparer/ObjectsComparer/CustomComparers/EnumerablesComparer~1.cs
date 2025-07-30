@@ -58,7 +58,7 @@ namespace ObjectsComparer
 
             for (var i = 0; i < list2.Count; i++)
             {
-                foreach (var failure in _comparer.CalculateDifferences(list1[i], list2[i]))
+                foreach (var failure in _comparer.CalculateDifferences(list1[i], list2[i], null))
                 {
                     yield return failure.InsertPath($"[{i}]");
                 }

@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ObjectsComparer
 {
     /// <summary>
     /// Implementation of <see cref="IComparer{T}"/> which provides implementation of Compare methods.
     /// </summary>
-    public abstract class AbstractComparer<T>: BaseComparer, IComparer<T>
+    public abstract class AbstractComparer<T> : BaseComparer, IComparer<T>
     {
         protected AbstractComparer(ComparisonSettings settings, BaseComparer parentComparer, IComparersFactory factory)
-            :base(settings, parentComparer, factory)
+            : base(settings, parentComparer, factory)
         {
         }
 
@@ -20,9 +21,9 @@ namespace ObjectsComparer
         /// <param name="obj2">Object 2.</param>
         /// <param name="differences">List of differences.</param>
         /// <returns>True if objects are equal, otherwise false.</returns>
-        public bool Compare(T obj1, T obj2, out IEnumerable<Difference> differences)
+        public bool Compare(T obj1, T obj2, out IEnumerable<Difference> differences, MemberInfo memberInfo)
         {
-            differences = CalculateDifferences(obj1, obj2);
+            differences = CalculateDifferences(obj1, obj2, memberInfo);
 
             return !differences.Any();
         }
@@ -35,7 +36,7 @@ namespace ObjectsComparer
         /// <returns>True if objects are equal, otherwise false.</returns>
         public bool Compare(T obj1, T obj2)
         {
-            return !CalculateDifferences(obj1, obj2).Any();
+            return !CalculateDifferences(obj1, obj2, null).Any();
         }
 
         /// <summary>
@@ -44,6 +45,6 @@ namespace ObjectsComparer
         /// <param name="obj1">Object 1.</param>
         /// <param name="obj2">Object 2.</param>
         /// <returns>List of differences between objects.</returns>
-        public abstract IEnumerable<Difference> CalculateDifferences(T obj1, T obj2);
+        public abstract IEnumerable<Difference> CalculateDifferences(T obj1, T obj2, MemberInfo memberInfo);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ObjectsComparer.Utils;
+using MemberInfoExtensions = ObjectsComparer.Utils.MemberInfoExtensions;
 
 namespace ObjectsComparer
 {
@@ -14,7 +14,7 @@ namespace ObjectsComparer
         private static string CalculateDifferencesMethodName
         {
             // ReSharper disable once IteratorMethodResultIsIgnored
-            get { return MemberInfoExtensions.GetMethodName<Comparer<object>>(x => x.CalculateDifferences(null, null)); }
+            get { return MemberInfoExtensions.GetMethodName<Comparer<object>>(x => x.CalculateDifferences(null, null, null)); }
         }
 
         /// <summary>

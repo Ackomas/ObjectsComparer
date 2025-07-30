@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace ObjectsComparer
 {
@@ -14,7 +15,7 @@ namespace ObjectsComparer
         /// <param name="settings">Comparison Settings. Null by default.</param>
         /// <param name="parentComparer">Parent comparer. Null by default.</param>
         /// <returns>Instance of <see cref="IComparer{T}"/>.</returns>
-        IComparer<T> GetObjectsComparer<T>(ComparisonSettings settings = null, BaseComparer parentComparer = null);
+        IComparer<T> GetObjectsComparer<T>(ComparisonSettings settings = null, BaseComparer parentComparer = null, MemberInfo memberInfo = null);
 
         /// <summary>
         /// Creates type specific comparer.
@@ -23,6 +24,6 @@ namespace ObjectsComparer
         /// <param name="settings">Comparison Settings. Null by default.</param>
         /// <param name="parentComparer">Parent comparer. Null by default.</param>
         /// <returns>Instance of <see cref="IComparer"/>.</returns>
-        IComparer GetObjectsComparer(Type type, ComparisonSettings settings = null, BaseComparer parentComparer = null);
+        IComparer GetObjectsComparer(Type type, ComparisonSettings settings = null, BaseComparer parentComparer = null, MemberInfo memberInfo = null);
     }
 }

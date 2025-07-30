@@ -49,17 +49,13 @@ namespace ObjectsComparer
         }
 
         /// <summary>
-        /// Calculates list of differences between objects.
+        /// Calculates the list of differences between two objects of type <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="obj1">Object 1.</param>
-        /// <param name="obj2">Object 2.</param>
-        /// <returns>List of differences between objects.</returns>
-        public override IEnumerable<Difference> CalculateDifferences(T obj1, T obj2)
-        {
-            return CalculateDifferences(obj1, obj2, null);
-        }
-
-        internal IEnumerable<Difference> CalculateDifferences(T obj1, T obj2, MemberInfo memberInfo)
+        /// <param name="obj1">The first object to compare.</param>
+        /// <param name="obj2">The second object to compare.</param>
+        /// <param name="memberInfo">Metadata of the member being compared, used for custom comparisons.</param>
+        /// <returns>An enumerable collection of differences between the objects.</returns>
+        public override IEnumerable<Difference> CalculateDifferences(T obj1, T obj2, MemberInfo memberInfo)
         {
             var comparer = memberInfo != null
                 ? OverridesCollection.GetComparer(memberInfo)
@@ -137,7 +133,7 @@ namespace ObjectsComparer
                 if (!hasCustomComparer
                     && !type.IsComparable())
                 {
-                    var objectDataComparer = Factory.GetObjectsComparer(type, Settings, this);
+                    var objectDataComparer = Factory.GetObjectsComparer(type, Settings, this, member);
 
                     foreach (var failure in objectDataComparer.CalculateDifferences(type, value1, value2))
                     {
