@@ -26,6 +26,13 @@ stages:
           clean: all
 
         steps:
+          - script: |
+              echo "Show parameters !!"
+              echo $(projectPath)
+              echo $(projectName)
+              echo $(VstsFeed)
+              echo $(ObjectComparerPackageId)
+
           - task: DotNetCoreCLI@2
             displayName: Restore packages
             inputs:
